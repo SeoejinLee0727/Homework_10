@@ -144,6 +144,20 @@ void recursiveInorder(Node* ptr)
 void iterativeInorder(Node* node)
 {
 	
+	
+	while(1)
+	{
+		for(;node;node=node->left) // 제일 왼쪽 노드까지 루프 
+		   push(node); //스택에 하나씩 삽입
+		
+		node = pop(); //스택에서 삭제해즘
+		if(!node) // 스택이 공백일경우
+		    break; //무한 루프 탈출
+			
+		printf("[%d]",node->key); //node->key값을 출력
+		 	 
+		node=node->right; //노드의 오른쪽으로 이동   
+	}
 }
 
 /**
@@ -151,7 +165,25 @@ void iterativeInorder(Node* node)
  */
 void levelOrder(Node* ptr)
 {
-	
+	if (!ptr) 
+	     return; // 공백트리라면 return
+
+	enQueue(ptr); // 루트노드 값을 큐에 삽입
+
+	for (;;) {
+		ptr = deQueue(); // 큐에서 pop
+		
+		if (ptr) // ptr이 널값이 아니면
+		{
+			printf(" [%d] ", ptr->key); // ptr 데이터값 출력
+			if (ptr->left) // ptr->left의 값이 널이 아니면
+				enQueue(ptr->left); // 큐에 해당 데이터 삽입
+			if (ptr->right) // ptr->right의 값이 널이 아니면
+				enQueue(ptr->right); // 큐에 해당 데이터 삽입
+		}
+		else // ptr이 더이상 아무것도 가리키지 않으면 반복문 탈출
+			break;
+	}
 }
 
 int insert(Node* head, int key)
